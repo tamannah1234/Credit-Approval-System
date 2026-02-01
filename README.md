@@ -1,133 +1,95 @@
 # 🚀 Credit Approval System
 
 A **backend Credit Approval System** built using **Django** and **Django REST Framework**.  
-The system evaluates customer creditworthiness based on historical loan data and processes new loan requests using predefined business rules.
-
-> 📌 Backend Internship Assignment  
-> 📦 Fully Dockerized | REST API Driven | Production-structured
+This project evaluates customer **creditworthiness** based on historical loan data and processes new loan requests using predefined business rules.
 
 ---
 
-## 📑 Table of Contents
-
-- Project Overview  
-- Tech Stack  
-- Key Features  
-- Data Initialization  
-- Project Setup  
-- API Endpoints  
-- Credit Scoring Logic  
-- Security & Configuration  
-- Assumptions  
-- Project Status  
-- Author  
-
----
-
-## 🧠 Project Overview
-
-The **Credit Approval System** enables financial institutions to:
-
-- Register customers and compute approved credit limits
-- Load historical customer and loan data
-- Calculate a customer credit score
-- Evaluate loan eligibility based on business rules
-- Create and manage loan records
-- Expose REST APIs for customer and loan operations
-- Run seamlessly using Docker containers
-
----
-
-## 🛠 Tech Stack
+## 📌 Tech Stack
 
 | Layer | Technology |
 |-----|-----------|
-| Backend | Django, Django REST Framework |
+| Backend | Django 4+, Django REST Framework |
 | Database | PostgreSQL |
-| Background Processing | Celery |
+| Async Tasks | Celery |
 | Message Broker | Redis |
 | Containerization | Docker, Docker Compose |
 | Language | Python 3.12 |
 
 ---
 
-## ✨ Key Features
+## 📖 Project Overview
 
-- Customer registration with automatic credit limit calculation  
-- Background ingestion of customer and loan data  
-- Credit score computation using historical loan performance  
-- Loan eligibility validation before approval  
-- Loan creation and tracking  
-- RESTful APIs for all operations  
-- Fully containerized environment  
+The Credit Approval System provides REST APIs to:
+
+- 👤 Register customers
+- 💳 Calculate credit score based on loan history
+- ✅ Check loan eligibility
+- 📝 Create and manage loans
+- 📊 View customer and loan details
+- ⚙️ Ingest initial data using background workers
+- 🐳 Run completely inside Docker containers
 
 ---
 
-## 📂 Data Initialization
+## 📂 Data Initialization (Background Tasks)
 
-Historical data is loaded using **Celery background workers**.
+Initial data is ingested using **Celery workers** from Excel files.
 
 ### 🧑 Customer Data (`customers_data.xlsx`)
 
-| Field | Description |
-|-----|------------|
-| customer_id | Unique customer identifier |
-| first_name | Customer first name |
-| last_name | Customer last name |
-| age | Customer age |
-| phone_number | Contact number |
-| monthly_salary | Monthly income |
-| approved_limit | Credit limit |
-| current_debt | Existing debt |
+| Field |
+|------|
+| customer_id |
+| first_name |
+| last_name |
+| age |
+| phone_number |
+| monthly_salary |
+| approved_limit |
+| current_debt (default = 0) |
+
+### 💰 Loan Data (`loan_data.xlsx`)
+
+| Field |
+|-----|
+| loan_id |
+| customer_id |
+| loan_amount |
+| tenure |
+| interest_rate |
+| monthly_repayment (EMI) |
+| EMIs paid on time |
+| start_date |
+| end_date |
 
 ---
 
-### 💳 Loan Data (`loan_data.xlsx`)
-
-| Field | Description |
-|-----|------------|
-| loan_id | Unique loan identifier |
-| customer_id | Associated customer |
-| loan_amount | Loan amount |
-| tenure | Loan tenure (months) |
-| interest_rate | Interest percentage |
-| monthly_repayment | EMI amount |
-| EMIs paid on time | Payment history |
-| start_date | Loan start date |
-| end_date | Loan end date |
-
----
-
-## ⚙️ Project Setup
+## 🛠️ Project Setup (Step-by-Step)
 
 ### 1️⃣ Clone the Repository
+
 ```bash
 git clone https://github.com/<your-username>/Credit-Approval-System.git
 cd Credit-Approval-System
-###  2️⃣ Run with Docker
-```bash
+---
+2️⃣ Run with Docker
 docker compose up --build
-
-
 This will start:
 
-Django web server
+🟢 Django Web Server
 
-PostgreSQL database
+🟡 PostgreSQL Database
 
-Redis
+🔵 Redis
 
-Celery worker
+🟣 Celery Worker
 
-### 3️⃣ Access the Application
+3️⃣ Access the Application
 http://127.0.0.1:8000/
-
-### 🔗 API Endpoints
-
-Base URL
-
+🔗 API Endpoints
+📍 Base URL
 /api/
-
 🟢 Register Customer
 POST /api/register/
 
@@ -138,7 +100,6 @@ POST /api/register/
   "monthly_salary": 50000,
   "phone_number": "9629317944"
 }
-
 🟡 Check Loan Eligibility
 POST /api/check-eligibility/
 
@@ -148,7 +109,6 @@ POST /api/check-eligibility/
   "interest_rate": 10,
   "tenure": 12
 }
-
 🔵 Create Loan
 POST /api/create-loan/
 
@@ -158,35 +118,32 @@ POST /api/create-loan/
   "interest_rate": 10,
   "tenure": 12
 }
-
 🔍 View Loan by Loan ID
 GET /api/view-loan/<loan_id>/
 
-📄 View Loans by Customer ID
+📄 View All Loans of a Customer
 GET /api/view-loans/<customer_id>/
 
-### 📊 Credit Scoring Logic
+📊 Credit Scoring Logic
+Credit score (out of 100) is calculated using:
 
-Credit score is calculated out of 100, based on:
+✔ Number of EMIs paid on time
 
-Number of EMIs paid on time
+✔ Number of past loans
 
-Number of past loans
+✔ Total outstanding loan amount
 
-Total outstanding loan amount
+✔ EMI burden relative to monthly salary
 
-EMI burden relative to monthly salary
-
-### Loan Approval Rules
+🧮 Loan Approval Rules
 Credit Score	Decision
 > 50	Loan approved
 30 – 50	Approved (interest ≥ 12%)
 10 – 30	Approved (interest ≥ 16%)
 < 10	Loan rejected
-EMI > 50% salary	Loan rejected
+EMI > 50% of salary	Loan rejected
 Loans exceed approved limit	Credit score = 0
-### 🔐 Security & Configuration
-
+🔐 Security & Configuration
 .gitignore excludes:
 
 Environment files
@@ -195,19 +152,18 @@ Database files
 
 Python cache files
 
-No production credentials are exposed
+❌ No production credentials exposed
 
-Runs completely inside Docker containers
+✅ Runs fully inside Docker containers
 
-### 📌 Assumptions
-
+📌 Assumptions
 Compound interest is used for EMI calculation
 
 Only active loans are considered
 
-Dummy/sample data is used for assessment
+Sample / dummy data is provided for evaluation
 
-### ✅ Project Status
+✅ Project Status
 Feature	Status
 REST APIs	✔ Completed
 Credit Logic	✔ Implemented
@@ -215,9 +171,8 @@ Background Ingestion	✔ Working
 Docker Setup	✔ Ready
 Submission Ready	✔ Yes
 👩‍💻 Author
-
 Tamanna Singh
 Backend Developer
 
-Django · REST APIs · PostgreSQL · Docker
-
+Skills:
+Django · REST APIs · PostgreSQL · Celery · Docker
