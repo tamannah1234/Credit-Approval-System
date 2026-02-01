@@ -104,3 +104,122 @@ Initial data is ingested using **Celery background workers**.
 ```bash
 git clone https://github.com/<your-username>/Credit-Approval-System.git
 cd Credit-Approval-System
+2️⃣ Run Using Docker
+docker compose up --build
+
+
+This command starts:
+
+Django web server
+
+PostgreSQL database
+
+Redis service
+
+Celery worker
+
+3️⃣ Access the Application
+http://127.0.0.1:8000/
+
+🔗 API Endpoints
+
+Base URL:
+
+/api/
+
+🟢 Register Customer
+
+POST /register/
+
+{
+  "first_name": "Aaron",
+  "last_name": "Garcia",
+  "age": 63,
+  "monthly_salary": 50000,
+  "phone_number": "9629317944"
+}
+
+🟡 Check Loan Eligibility
+
+POST /check-eligibility/
+
+{
+  "customer_id": 1,
+  "loan_amount": 100000,
+  "interest_rate": 10,
+  "tenure": 12
+}
+
+🔵 Create Loan
+
+POST /create-loan/
+
+{
+  "customer_id": 1,
+  "loan_amount": 100000,
+  "interest_rate": 10,
+  "tenure": 12
+}
+
+🔍 View Loan by Loan ID
+
+GET /view-loan/<loan_id>/
+
+📄 View Loans by Customer ID
+
+GET /view-loans/<customer_id>/
+
+📊 Credit Scoring Logic
+
+Credit score (out of 100) is calculated using:
+
+Number of EMIs paid on time
+
+Number of loans taken
+
+Current outstanding loan amount
+
+EMI burden compared to monthly salary
+
+Loan Approval Rules
+Credit Score	Decision
+> 50	Loan approved
+30 – 50	Approved (interest ≥ 12%)
+10 – 30	Approved (interest ≥ 16%)
+< 10	Loan rejected
+EMI > 50% salary	Loan rejected
+Loans > approved limit	Credit score = 0
+🔐 Security & Configuration
+
+.gitignore excludes:
+
+Database files
+
+Python cache files
+
+Docker artifacts
+
+No production credentials are exposed
+
+Application runs fully inside Docker containers
+
+📌 Assumptions
+
+Compound interest is used for EMI calculation
+
+Only active loans are considered for eligibility checks
+
+Dummy/sample data is used for assessment purposes
+
+✅ Project Status
+Feature	Status
+APIs implemented	✔
+Credit logic	✔
+Background ingestion	✔
+Docker setup	✔
+Ready for evaluation	✔
+👩‍💻 Author
+
+Tamanna Singh
+Backend Developer
+Django • REST APIs • PostgreSQL • Docker
