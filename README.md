@@ -72,7 +72,7 @@ Initial data is ingested using **Celery workers** from Excel files.
 ```bash
 git clone https://github.com/<your-username>/Credit-Approval-System.git
 cd Credit-Approval-System
----
+
 2️⃣ Run with Docker
 docker compose up --build
 This will start:
@@ -176,3 +176,4 @@ Backend Developer
 
 Skills:
 Django · REST APIs · PostgreSQL · Celery · Docker
+---
