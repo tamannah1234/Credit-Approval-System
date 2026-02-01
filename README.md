@@ -89,10 +89,10 @@ This will start:
 
 ### 3️⃣ Access the Application
 http://127.0.0.1:8000/
-# 🔗 API Endpoints
+### 🔗 API Endpoints
 📍 Base URL
 /api/
-# 🟢 Register Customer
+### 🟢 Register Customer
 POST /api/register/
 
 {
@@ -102,7 +102,7 @@ POST /api/register/
   "monthly_salary": 50000,
   "phone_number": "9629317944"
 }
-# 🟡 Check Loan Eligibility
+### 🟡 Check Loan Eligibility
 POST /api/check-eligibility/
 
 {
@@ -111,7 +111,7 @@ POST /api/check-eligibility/
   "interest_rate": 10,
   "tenure": 12
 }
-# 🔵 Create Loan
+### 🔵 Create Loan
 POST /api/create-loan/
 
 {
@@ -120,10 +120,10 @@ POST /api/create-loan/
   "interest_rate": 10,
   "tenure": 12
 }
-# 🔍 View Loan by Loan ID
+### 🔍 View Loan by Loan ID
 GET /api/view-loan/<loan_id>/
 
-# 📄 View All Loans of a Customer
+### 📄 View All Loans of a Customer
 GET /api/view-loans/<customer_id>/
 
 ### 📊 Credit Scoring Logic
