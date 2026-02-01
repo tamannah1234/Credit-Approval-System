@@ -104,3 +104,120 @@ Historical data is loaded using **Celery background workers**.
 ```bash
 git clone https://github.com/<your-username>/Credit-Approval-System.git
 cd Credit-Approval-System
+###  2️⃣ Run with Docker
+```bash
+docker compose up --build
+
+
+This will start:
+
+Django web server
+
+PostgreSQL database
+
+Redis
+
+Celery worker
+
+### 3️⃣ Access the Application
+http://127.0.0.1:8000/
+
+### 🔗 API Endpoints
+
+Base URL
+
+/api/
+
+🟢 Register Customer
+POST /api/register/
+
+{
+  "first_name": "Aaron",
+  "last_name": "Garcia",
+  "age": 63,
+  "monthly_salary": 50000,
+  "phone_number": "9629317944"
+}
+
+🟡 Check Loan Eligibility
+POST /api/check-eligibility/
+
+{
+  "customer_id": 1,
+  "loan_amount": 100000,
+  "interest_rate": 10,
+  "tenure": 12
+}
+
+🔵 Create Loan
+POST /api/create-loan/
+
+{
+  "customer_id": 1,
+  "loan_amount": 100000,
+  "interest_rate": 10,
+  "tenure": 12
+}
+
+🔍 View Loan by Loan ID
+GET /api/view-loan/<loan_id>/
+
+📄 View Loans by Customer ID
+GET /api/view-loans/<customer_id>/
+
+### 📊 Credit Scoring Logic
+
+Credit score is calculated out of 100, based on:
+
+Number of EMIs paid on time
+
+Number of past loans
+
+Total outstanding loan amount
+
+EMI burden relative to monthly salary
+
+### Loan Approval Rules
+Credit Score	Decision
+> 50	Loan approved
+30 – 50	Approved (interest ≥ 12%)
+10 – 30	Approved (interest ≥ 16%)
+< 10	Loan rejected
+EMI > 50% salary	Loan rejected
+Loans exceed approved limit	Credit score = 0
+### 🔐 Security & Configuration
+
+.gitignore excludes:
+
+Environment files
+
+Database files
+
+Python cache files
+
+No production credentials are exposed
+
+Runs completely inside Docker containers
+
+### 📌 Assumptions
+
+Compound interest is used for EMI calculation
+
+Only active loans are considered
+
+Dummy/sample data is used for assessment
+
+### ✅ Project Status
+Feature	Status
+REST APIs	✔ Completed
+Credit Logic	✔ Implemented
+Background Ingestion	✔ Working
+Docker Setup	✔ Ready
+Submission Ready	✔ Yes
+👩‍💻 Author
+
+Tamanna Singh
+Backend Developer
+
+Django · REST APIs · PostgreSQL · Docker
+
