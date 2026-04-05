@@ -4,3 +4,5 @@ psycopg2-binary
 celery
 redis
 openpyxl
+python-dotenv
+django-cors-headers

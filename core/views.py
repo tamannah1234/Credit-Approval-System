@@ -155,7 +155,7 @@ class CreateLoan(APIView):
                 "monthly_installment": round(monthly_emi, 2)
             }, status=status.HTTP_200_OK)
 
-        # ✅ FIX IS HERE: monthly_repayment added
+    
         loan = Loan.objects.create(
           customer=customer,
           loan_amount=loan_amount,
